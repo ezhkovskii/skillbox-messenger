@@ -2,6 +2,9 @@ from PyQt5 import QtWidgets, QtCore
 import clientui
 import requests
 from datetime import datetime
+from webbrowser import open as webbrowser_open
+from utils import get_image_url
+
 
 
 class MessengerWindow(QtWidgets.QMainWindow, clientui.Ui_MainWindow):
@@ -21,7 +24,15 @@ class MessengerWindow(QtWidgets.QMainWindow, clientui.Ui_MainWindow):
         self.messages.append(message['name'] + ' ' + dt_str)
         self.messages.append(message['text'])
         self.messages.append('')
+
+        if message['text'] == 'бот пришли пёсика':
+            self.messages.append('*открываю браузер*')
+            self.messages.append('')
+            url = get_image_url()
+            webbrowser_open(url)
+
         self.messages.repaint()
+
 
     def load_messages(self):
         try:
